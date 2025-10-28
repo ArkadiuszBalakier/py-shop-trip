@@ -5,8 +5,10 @@ from .car import Car
 from .customer import Customer
 from .shop import Shop
 
+
 class ConfigError(Exception):
     pass
+
 
 def parse_car(car: dict[str, Any]) -> Car:
     fuel_consumption_raw = car.get("fuel_consumption")
@@ -26,6 +28,7 @@ def parse_car(car: dict[str, Any]) -> Car:
         fuel_consumption=fuel_consumption,
     )
 
+
 def parse_shop(shop: dict[str, Any]) -> Shop:
     if "name" not in shop or not shop["name"]:
         raise ConfigError("Shop name is required")
@@ -43,6 +46,7 @@ def parse_shop(shop: dict[str, Any]) -> Shop:
         location=tuple(location),
         products=shop.get("products"),
     )
+
 
 def parse_customer(customer: dict[str, Any]) -> Customer:
     money_raw = customer.get("money")
@@ -79,6 +83,7 @@ def parse_customer(customer: dict[str, Any]) -> Customer:
         car=parse_car(car_data),
     )
 
+
 def load_config_data(file_path: str) -> dict[str, Any]:
     config_path = pathlib.Path(__file__).parent.parent / file_path
     try:
@@ -89,9 +94,8 @@ def load_config_data(file_path: str) -> dict[str, Any]:
     except json.JSONDecodeError:
         raise ConfigError(f"File {file_path} contains invalid json.")
 
-
     try:
-        if not "FUEL_PRICE" in config_data:
+        if "FUEL_PRICE" not in config_data:
             raise ConfigError("fuel_price is required")
         fuel_price_raw = config_data["FUEL_PRICE"]
         try:
@@ -100,14 +104,14 @@ def load_config_data(file_path: str) -> dict[str, Any]:
             raise ConfigError("fuel_price is invalid")
 
         shops = []
-        if not "shops" in config_data:
+        if "shops" not in config_data:
             raise ConfigError("shops is required")
         for shop_data in config_data["shops"]:
             shop = parse_shop(shop_data)
             shops.append(shop)
 
         customers = []
-        if not "customers" in config_data:
+        if "customers" not in config_data:
             raise ConfigError("customers is required")
         for customer_data in config_data["customers"]:
             customer = parse_customer(customer_data)
@@ -115,8 +119,8 @@ def load_config_data(file_path: str) -> dict[str, Any]:
 
     except (KeyError, TypeError) as e:
         raise ConfigError(
-            f"Configuration structure error (KeyError/TypeError):" 
-            f"{e}. Check configuration structure (e.g., missing 'shops',"
+            f"Configuration structure error (KeyError/TypeError): "
+            f"{e}. Check configuration structure (e.g., missing 'shops', "
             f"'customers' key or incorrect type)."
         )
 
