@@ -17,7 +17,7 @@ class Customer:
         for product , quantity in self.product_cart.items():
             if product in shop.products:
                 total_cost += shop.products[product] * quantity
-            if product not in shop.products:
+            else:
                 return 0.0
         return total_cost
 

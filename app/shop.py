@@ -9,8 +9,6 @@ class Shop:
     products: dict[str, float]
 
     def has_products(self, cart: dict[str, int]) -> bool:
-        if not isinstance(cart, dict):
-            raise TypeError("cart must be a dict")
 
         available_products = self.products.keys()
 
@@ -51,7 +49,7 @@ class Shop:
             product_display_name = (
                 f"{product_name}s"
                 if not product_name.endswith("s")
-                else {product_name}
+                else product_name
             )
 
             print(f"{quantity} {product_display_name}"

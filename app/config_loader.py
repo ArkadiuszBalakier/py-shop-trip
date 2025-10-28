@@ -4,11 +4,7 @@ from typing import Any
 from .car import Car
 from .customer import Customer
 from .shop import Shop
-
-
-class ConfigError(Exception):
-    pass
-
+from .helper_fuctions import ConfigError, validate_location
 
 def parse_car(car: dict[str, Any]) -> Car:
     fuel_consumption_raw = car.get("fuel_consumption")
@@ -21,7 +17,7 @@ def parse_car(car: dict[str, Any]) -> Car:
 
     brand = car.get("brand")
     if brand is None:
-        raise ConfigError("car name is missing")
+        raise ConfigError("car brand name is missing")
 
     return Car(
         brand=brand,
@@ -34,12 +30,7 @@ def parse_shop(shop: dict[str, Any]) -> Shop:
         raise ConfigError("Shop name is required")
 
     location = shop.get("location")
-    if not isinstance(location, (tuple, list)):
-        raise ConfigError("Shop location must be a list or tuple.")
-    if len(location) != 2:
-        raise ConfigError(
-            f"Shop location must have exactly 2 elements, got {len(location)}"
-        )
+    location = validate_location(location, shop["name"])
 
     return Shop(
         name=shop.get("name"),
@@ -66,12 +57,7 @@ def parse_customer(customer: dict[str, Any]) -> Customer:
         raise ConfigError("Customer name is missing")
 
     location = customer.get("location")
-    if not isinstance(location, (tuple, list)):
-        raise ConfigError("Shop location must be a list or tuple.")
-    if len(location) != 2:
-        raise ConfigError(
-            f"Shop location must have exactly 2 elements, got {len(location)}"
-        )
+    location = validate_location(location, name)
 
     products_cart = customer.get("product_cart")
 
