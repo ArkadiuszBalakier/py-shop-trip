@@ -6,6 +6,7 @@ from .customer import Customer
 from .shop import Shop
 from .helper_fuctions import ConfigError, validate_location
 
+
 def parse_car(car: dict[str, Any]) -> Car:
     fuel_consumption_raw = car.get("fuel_consumption")
     if fuel_consumption_raw is None:
