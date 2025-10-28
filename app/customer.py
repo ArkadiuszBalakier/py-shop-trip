@@ -35,7 +35,7 @@ class Customer:
 
     def go_shopping(self, shops: list[Shop], fuel_price: float) -> None:
 
-        print(f"{self.name} has {self.money: .0f} dollars")
+        print(f"{self.name} has {self.money:.0f} dollars")
         min_total_cost = float("inf")
         best_shop = None
 
@@ -46,7 +46,7 @@ class Customer:
             trip_cost = self.total_trip_cost(shop.location, fuel_price)
             total_trip_cost = product_cost + trip_cost
 
-            formatted_cost = f"{total_trip_cost: .2f}"
+            formatted_cost = f"{total_trip_cost:.2f}"
             print(f"{self.name}'s trip to "
                   f"the {shop.name} costs {formatted_cost}")
 
@@ -71,7 +71,7 @@ class Customer:
 
             print(f"{self.name} rides home")
             self.location = self.home_location
-            print(f"{self.name} now has {self.money: .2f} dollars\n")
+            print(f"{self.name} now has {self.money:.2f} dollars\n")
         else:
             print(f"{self.name} doesn't have enough money"
                   f" to make a purchase in any shop")

@@ -46,7 +46,7 @@ class Shop:
             if line_cost == int(line_cost):
                 formatted_line_cost = f"{int(line_cost)}"
             else:
-                formatted_line_cost = f"{line_cost: .1f}"
+                formatted_line_cost = f"{line_cost:.1f}"
 
             product_display_name = (
                 f"{product_name}s"
@@ -57,6 +57,6 @@ class Shop:
             print(f"{quantity} {product_display_name}"
                   f" for {formatted_line_cost} dollars")
 
-        formatted_total_cost = f"{total_cost: .1f}"
+        formatted_total_cost = f"{total_cost:.1f}"
         print(f"Total cost is {formatted_total_cost} dollars")
         print("See you again!\n")
