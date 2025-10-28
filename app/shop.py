@@ -40,6 +40,7 @@ class Shop:
         print("You have bought:")
 
         for product_name, quantity in cart.items():
+
             line_cost = self.calc_product_cost(product_name, quantity)
             if line_cost == int(line_cost):
                 formatted_line_cost = f"{int(line_cost)}"
